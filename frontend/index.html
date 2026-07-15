@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fieldnote — Log HCP Interaction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">FN</span>
+    <div class="brand-text">
+      <span class="brand-name">Fieldnote</span>
+      <span class="brand-tag">HCP interaction log</span>
+    </div>
+  </div>
+  <div class="topbar-meta">
+    <span id="apiStatus" class="status-dot status-unknown" title="Backend status"></span>
+    <span class="rep-name">Rep · Jordan Lee</span>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- ============================= FORM PANEL ============================= -->
+  <section class="panel form-panel">
+    <div class="panel-head">
+      <h1>Log HCP Interaction</h1>
+      <span class="panel-sub">Interaction Details</span>
+    </div>
+
+    <form id="interactionForm">
+      <div class="grid-2">
+        <div class="field">
+          <label for="hcpName">HCP Name</label>
+          <input type="text" id="hcpName" autocomplete="off" placeholder="Search or select HCP..." />
+          <div id="hcpSuggestions" class="suggestions hidden"></div>
+        </div>
+        <div class="field">
+          <label for="interactionType">Interaction Type</label>
+          <select id="interactionType">
+            <option>Meeting</option>
+            <option>Call</option>
+            <option>Email</option>
+            <option>Conference</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+        </div>
+        <div class="field">
+          <label for="time">Time</label>
+          <input type="time" id="time" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="attendees">Attendees</label>
+        <input type="text" id="attendees" placeholder="Enter names or search..." />
+      </div>
+
+      <div class="field">
+        <label for="topics">Topics Discussed</label>
+        <textarea id="topics" rows="3" placeholder="Enter key discussion points..."></textarea>
+        <button type="button" id="voiceNoteBtn" class="ghost-btn small">
+          🎙️ Summarize from Voice Note <span class="req-consent">(requires consent)</span>
+        </button>
+      </div>
+
+      <div class="field">
+        <label>Materials Shared / Samples Distributed</label>
+        <div class="chip-row">
+          <div class="chip-box">
+            <span class="chip-box-label">Materials Shared</span>
+            <div id="materialsChips" class="chips"></div>
+            <button type="button" class="ghost-btn small" id="addMaterialBtn">🔍 Search/Add</button>
+          </div>
+          <div class="chip-box">
+            <span class="chip-box-label">Samples Distributed</span>
+            <div id="samplesChips" class="chips"></div>
+            <button type="button" class="ghost-btn small" id="addSampleBtn">＋ Add Sample</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Observed / Inferred HCP Sentiment</label>
+        <div class="sentiment-row" id="sentimentRow">
+          <button type="button" class="pill pill-positive" data-value="Positive">Positive</button>
+          <button type="button" class="pill pill-neutral active" data-value="Neutral">Neutral</button>
+          <button type="button" class="pill pill-negative" data-value="Negative">Negative</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="outcomes">Outcomes</label>
+        <textarea id="outcomes" rows="2" placeholder="Key outcomes or agreements..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="followups">Follow-up Actions</label>
+        <textarea id="followups" rows="2" placeholder="Enter next steps or tasks..."></textarea>
+      </div>
+
+      <div id="aiSuggestions" class="ai-suggestions hidden">
+        <span class="ai-suggestions-label">✨ AI Suggested Follow-ups</span>
+        <ul id="aiSuggestionsList"></ul>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" id="logBtn" class="primary-btn">Log Interaction</button>
+        <span id="formStatus" class="form-status"></span>
+      </div>
+    </form>
+
+    <section class="past-interactions">
+      <h2>Logged Interactions</h2>
+      <div id="pastList" class="past-list">
+        <p class="empty-note">Nothing logged yet — use the form or ask the AI Assistant.</p>
+      </div>
+    </section>
+  </section>
+
+  <!-- ============================ AI ASSISTANT ============================ -->
+  <aside class="panel chat-panel">
+    <div class="panel-head">
+      <h2>🤖 AI Assistant</h2>
+      <span class="panel-sub">Log interaction via chat</span>
+    </div>
+
+    <div id="chatFeed" class="chat-feed">
+      <div class="chat-msg agent">
+        <p>Log interaction details here (e.g. "Met Dr. Smith, discussed Product X efficacy, positive sentiment, shared brochure") or ask for help.</p>
+      </div>
+    </div>
+
+    <form id="chatForm" class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Describe interaction..." autocomplete="off" />
+      <button type="submit" class="primary-btn small" id="chatSendBtn">Log</button>
+    </form>
+  </aside>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
